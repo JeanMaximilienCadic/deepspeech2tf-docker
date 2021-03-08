@@ -1,12 +1,13 @@
 FROM python:3.6
 
-WORKDIR /workspace
+WORKDIR /tmp
 
-RUN git clone https://github.com/tensorflow/models
-WORKDIR /workspace/models/research/deep_speech
+COPY ./deep_speech/requirements.txt /tmp
 
 RUN apt update -y && apt install sox -y
 RUN pip install -r requirements.txt
 RUN pip install tensorflow absl-py sox
+
+WORKDIR /workspace
 
 CMD ["sh", "run_deep_speech.sh"]
